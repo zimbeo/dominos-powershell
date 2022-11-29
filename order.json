@@ -16,7 +16,7 @@
 		"OrderMethod": "Web",
 		"OrderTaker": "",
 		"Payments": [],
-		"Products": [],
+		"Products": ["2LCOKE"],
 		"Market": "",
 		"Currency": "",
 		"ServiceMethod": "Delivery",
