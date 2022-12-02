@@ -149,6 +149,7 @@ function Get-Menu {
 
 function Set-Store {
     param (
+        [Parameter(Mandatory=$true)]
         [String]$StoreID
     )
 
@@ -160,8 +161,14 @@ function Set-Store {
 
 function New-Order {
     param (
+        [Parameter(Mandatory=$true)]
         [Store]$Store,
+        [Parameter(Mandatory=$true)]
         [Customer]$Customer,
+        [Parameter(Mandatory=$true)]
+        [Address]$Address,
+        [Parameter(Mandatory=$true)]
+        [String]$ProductCode,
         [Address]$Address,
         [String[]]$Products
     )
@@ -177,13 +184,6 @@ function New-Order {
     $body.Order.FirstName = $Customer.FirstName
     $body.Order.LastName = $Customer.LastName
     $body.Order.Phone = $Customer.Phone
-    $body.Order.Address.Street = $address.Street
-    $body.Order.Address.City = $address.City
-    $body.Order.Address.Region = $address.Region
-    $body.Order.Address.PostalCode = $address.PostalCode
-    $body.Order.Products = $Products
 
-    $body = $body | ConvertTo-Json
-
-    $response = Invoke-RestMethod 'https://order.dominos.com/power/place-order' -Method 'POST' -Headers $headers -Body $body
+    $response = Invoke-RestMethod 'https://order.dominos.com/power/place-order' -Method 'POST' -Headers $headers -Body $bodyJS
 }
