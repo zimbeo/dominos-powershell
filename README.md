@@ -26,3 +26,8 @@ Create a store object to define which store you would like to use. StoreID can b
 ```
 $store = Set-Store -StoreID 4336
 ```
+
+Create an Order, providing a store, your customer details, and address
+```
+New-Order -Store $store -Customer $customer -Address $address -Products $products
+```

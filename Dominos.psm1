@@ -47,11 +47,9 @@ class Store {
     [String]$StoreID
 }
 
-class Order {
-    [Store]$Store
-    [Customer]$Customer
-    [Address]$Address
-}
+# class Products {
+#     [String[]]$Products
+# }
 
 # Functions
 function New-Address {
@@ -163,7 +161,9 @@ function Set-Store {
 function New-Order {
     param (
         [Store]$Store,
-        [Customer]$Customer
+        [Customer]$Customer,
+        [Address]$Address,
+        [String[]]$Products
     )
 
     $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
@@ -177,6 +177,13 @@ function New-Order {
     $body.Order.FirstName = $Customer.FirstName
     $body.Order.LastName = $Customer.LastName
     $body.Order.Phone = $Customer.Phone
+    $body.Order.Address.Street = $address.Street
+    $body.Order.Address.City = $address.City
+    $body.Order.Address.Region = $address.Region
+    $body.Order.Address.PostalCode = $address.PostalCode
+    $body.Order.Products = $Products
+
+    $body = $body | ConvertTo-Json
 
     $response = Invoke-RestMethod 'https://order.dominos.com/power/place-order' -Method 'POST' -Headers $headers -Body $body
 }
